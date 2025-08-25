@@ -1,15 +1,26 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import mongoose from "mongoose";
-async function connectDB() {
-    try {
-        const URL = process.env.MONGODB_URL || "";
-        await mongoose.connect(URL);
-        console.log("Database connected successfully");
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            console.error(`Error while connecting to database: ${error.message}`);
+function connectDB() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const URL = process.env.MONGODB_URL || "";
+            yield mongoose.connect(URL);
+            console.log("Database connected successfully");
         }
-    }
+        catch (error) {
+            if (error instanceof Error) {
+                console.error(`Error while connecting to database: ${error.message}`);
+            }
+        }
+    });
 }
 export default connectDB;
 //# sourceMappingURL=db.js.map

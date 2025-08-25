@@ -2,6 +2,7 @@ import express from "express";
 import type { Express, Response, Request } from "express";
 import dotenv from "dotenv";
 import connectDB from "./dist/db.js";
+//import { IpAddress } from "./models/ipadress.js";
 
 dotenv.config();
 connectDB();

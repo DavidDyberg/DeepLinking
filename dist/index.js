@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db.js";
-import { IpAddress } from "./models/ipadress.js";
 dotenv.config();
 connectDB();
 const app = express();
@@ -10,6 +9,9 @@ app.use(express.json());
 app.set("trust proxy", true);
 app.get("/", (req, res) => {
     const ip = req.ip;
+    if (!ip) {
+        return console.log("Elgot  has no IP");
+    }
     return res.json({
         ip,
     });
@@ -17,4 +19,4 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Elogit, Abdu, David app listening on port http://localhost:${PORT}`);
 });
-//# sourceMappingURL=server.js.map
+//# sourceMappingURL=index.js.map
