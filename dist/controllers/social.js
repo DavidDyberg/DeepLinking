@@ -8,23 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-function connectDB() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const URL = process.env.MONGODB_URL || "";
-            yield mongoose_1.default.connect(URL);
-            console.log("Database connected successfully");
+exports.saveNewIp = exports.ipCheckUser = void 0;
+const ipadress_1 = require("../models/ipadress");
+const ipCheckUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const ip = req.ip;
+    if (!ip) {
+        res.send(console.log("Elgot has no IP"));
+    }
+    res.json({ ip });
+});
+exports.ipCheckUser = ipCheckUser;
+const saveNewIp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const ip = yield ipadress_1.IpAddress.create(req.ip);
+        res.status(201).json(ip);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            console.error(`Error when saving ip-adress: ${error.message}`);
         }
-        catch (error) {
-            if (error instanceof Error) {
-                console.error(`Error while connecting to database: ${error.message}`);
-            }
-        }
-    });
-}
-exports.default = connectDB;
+    }
+});
+exports.saveNewIp = saveNewIp;
