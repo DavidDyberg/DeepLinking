@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Deep Linking Demo</title>
+  </head>
+  <body>
+    <h1>Välkommen!</h1>
+    <p>Din IP-adress är: <span id="ip">Hämtar...</span></p>
+
+    <form>
+      <label for="name">Namn:</label>
+      <input type="text" id="name" name="name" required />
+      <button type="submit">Registrera</button>
+    </form>
+
+    <script>
+      fetch("http://localhost:3000/")
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById("ip").textContent =
+            data.ip || "Kunde inte hämta IP";
+          console.log(data.ip);
+        })
+        .catch(() => {
+          document.getElementById("ip").textContent = "Fel vid hämtning";
+          console.error("Fel vid hämtning av IP-adress");
+        });
+    </script>
+  </body>
+</html>
