@@ -8,16 +8,17 @@ export const saveNewIp = async (req: Request, res: Response): Promise<void> => {
     const source = req.query.source;
     const ip = req.ip;
 
+    const existingIp = await IpAddress.findOne({ ip });
+    if (existingIp) {
+      res.send(`Sent and delted from database: ${influencer}, ${ip}`);
+      await IpAddress.deleteOne({ _id: existingIp._id });
+      return;
+    }
+
     const existingInfluencer = influencers.includes(String(influencer));
 
     if (!existingInfluencer || !source) {
       res.status(404).json("no existing influencer or source");
-      return;
-    }
-    const existingIp = await IpAddress.findOne({ ip });
-    if (existingIp) {
-      res.send(`confirmed: ${influencer}, ${ip}`);
-      await IpAddress.deleteOne({ _id: existingIp._id });
       return;
     }
 
