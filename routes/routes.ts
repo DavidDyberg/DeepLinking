@@ -1,10 +1,9 @@
 import express from "express";
-
-import { ipSchema } from "../models/ipadress";
+import { ipCheckUser, saveNewIp } from "../controllers/social";
 
 const ipaddress = express.Router();
 
-ipaddress.post("/", ipaddress);
-ipaddress.get("/", ipaddress);
+ipaddress.post("/", ipCheckUser);
+ipaddress.get("/", saveNewIp);
 
 export default ipaddress;
